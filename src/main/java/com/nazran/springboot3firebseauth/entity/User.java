@@ -1,0 +1,62 @@
+package com.nazran.springboot3firebseauth.entity;
+
+
+import com.nazran.springboot3firebseauth.enums.ApplicationTheme;
+import com.nazran.springboot3firebseauth.enums.AvatarType;
+import com.nazran.springboot3firebseauth.enums.UserStatus;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Size;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
+import jakarta.persistence.*;
+@Getter
+@Setter
+@Entity
+@DynamicInsert
+@DynamicUpdate
+@NoArgsConstructor
+@Table(name = "users")
+public class User extends BaseEntityWithUpdate{
+
+    private static final Long serialVersionUID = 1L;
+
+    @Column(name = "first_name", length = 100, nullable = false)
+    private String firstName;
+
+    @Column(name = "last_name", length = 100, nullable = false)
+    private String lastName;
+
+    @Column(name = "email", length = 256, nullable = false, unique = true)
+    @Email
+    @Size(max = 256)
+    private String email;
+
+    @Column(name = "normalized_email", length = 256, nullable = false, unique = true)
+    @Email
+    @Size(max = 256)
+    private String normalizedEmail;
+
+    @Column(name = "is_email_verified")
+    private Boolean isEmailVerified = false;
+
+    @Column(name = "firebase_user_id", length = 100, nullable = false)
+    private String firebaseUserId;
+
+    @Enumerated(EnumType.ORDINAL)
+    @Column(name = "status", length = 20)
+    private UserStatus userStatus;
+
+    @Column(name = "avatar", columnDefinition = "BYTEA")
+    private byte[] avatar; // To store icon in binary format
+
+    @Enumerated(EnumType.ORDINAL)
+    @Column(name = "avatar_type", length = 20)
+    private AvatarType avatarType;
+
+    @Enumerated(EnumType.ORDINAL)
+    @Column(name = "application_theme", length = 20)
+    private ApplicationTheme applicationTheme;
+}

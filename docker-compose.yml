@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  service:
+    image: springboot3withfirebaseauth_back_image
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: springboot3withfirebaseauth_back_container
+    environment:
+      - DB_HOST=88.99.138.237
+      - DB_PORT=54338
+      - DB_NAME=mbc
+      - DB_USER=dev
+      - DB_PASSWORD=Password1!
+    restart: always
+    ports:
+      - "8082:8082"
+    tty: true
+    networks:
+      - app_network
+networks:
+  app_network:
+    driver: bridge
