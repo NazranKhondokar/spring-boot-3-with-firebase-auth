@@ -37,6 +37,9 @@ public class AuthServiceImpl implements AuthService {
 
     private final FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     @Transactional
     public UserRegistrationResponse registerUser(UserRegistrationRequest request) {
@@ -60,6 +63,9 @@ public class AuthServiceImpl implements AuthService {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String resendVerificationEmail(String email) {
         logger.info("Attempting to resend verification email for: {}", email);
@@ -79,6 +85,9 @@ public class AuthServiceImpl implements AuthService {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public LoginResponse login(String idToken) {
         try {
@@ -122,7 +131,6 @@ public class AuthServiceImpl implements AuthService {
         User user = existingUser.orElseGet(User::new);
         user.setFirebaseUserId(firebaseUserId);
         user.setEmail(email);
-        user.setNormalizedEmail(normalizedEmail);
         user.setIsEmailVerified(isEmailVerified);
         user.setUserStatus(isEmailVerified ? UserStatus.Active : UserStatus.Inactive);
 

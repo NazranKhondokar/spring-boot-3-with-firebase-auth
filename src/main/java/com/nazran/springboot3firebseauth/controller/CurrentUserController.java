@@ -8,8 +8,6 @@ import com.nazran.springboot3firebseauth.service.CurrentUserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.json.simple.JSONObject;
@@ -42,7 +40,6 @@ public class CurrentUserController {
     /**
      * Endpoint to upload and set the avatar for the authenticated user.
      *
-     * @param avatarType     The type of avatar
      * @param file           The avatar file to upload. Must be a JPEG/PNG file and not exceed 5MB.
      * @param firebaseUserId The Firebase User ID of the authenticated user.
      * @return ResponseEntity  A response indicating the result of the operation.
@@ -53,18 +50,13 @@ public class CurrentUserController {
             description = "Allows authenticated users to set their avatar. Supported avatar types: " +
                     "0: Standard, 1: Red Eyes, 2: Custom. File must be JPEG/PNG and not exceed 5MB.")
     public ResponseEntity<JSONObject> setAvatar(
-            @NotNull(message = "Avatar type is required.")
-            @Min(value = 0, message = "Avatar type must be at least 0.")
-            @Max(value = 2, message = "Avatar type must be at most 2.")
-            @RequestParam("avatarType") Integer avatarType,
-
             @ValidAvatar
             @RequestParam("file") MultipartFile file,
 
             @AuthenticationPrincipal String firebaseUserId) {
-        logger.info("Processing avatar upload request for user with Firebase ID: {} and avatar type: {}", firebaseUserId, avatarType);
+        logger.info("Processing avatar upload request for user with Firebase ID: {}", firebaseUserId);
         try {
-            currentUserService.setAvatar(avatarType, file, firebaseUserId);
+            currentUserService.setAvatar(file, firebaseUserId);
             logger.info("Successfully set avatar for user with Firebase ID: {}", firebaseUserId);
             return ok(success(null, "Avatar uploaded successfully.").getJson());
         } catch (IllegalArgumentException e) {

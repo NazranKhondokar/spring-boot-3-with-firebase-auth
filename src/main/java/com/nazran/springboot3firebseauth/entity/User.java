@@ -18,7 +18,7 @@ import java.io.Serial;
 @DynamicInsert
 @DynamicUpdate
 @NoArgsConstructor
-@Table(schema = "bitcoin", name = "users")
+@Table(name = "users")
 public class User extends BaseEntityWithUpdate {
 
     @Serial
@@ -34,11 +34,6 @@ public class User extends BaseEntityWithUpdate {
     @Email
     @Size(max = 256)
     private String email;
-
-    @Column(name = "normalized_email", length = 256, nullable = false, unique = true)
-    @Email
-    @Size(max = 256)
-    private String normalizedEmail;
 
     @Column(name = "is_email_verified")
     private Boolean isEmailVerified = false;

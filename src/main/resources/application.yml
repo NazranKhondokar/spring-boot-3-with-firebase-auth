@@ -5,13 +5,14 @@ server:
   error:
     include-stacktrace: always
   compression:
-      enabled: true
+    enabled: true
   address: 0.0.0.0
 
 # Spring Configuration
 spring:
   jackson:
-    date-format: yyyy-MM-dd
+    date-format: yyyy-MM-dd'T'HH:mm:ss.SSSXXX
+    time-zone: UTC
   application:
     name: springboot3withfirebaseauth
   main:
@@ -19,7 +20,7 @@ spring:
 
   # Database Configuration
   datasource:
-    url: jdbc:postgresql://${DB_HOST}:${DB_PORT}/mbc
+    url: jdbc:postgresql://${DB_HOST}:${DB_PORT}/${DB_NAME}
     username: ${DB_USER}
     password: ${DB_PASSWORD}
     driver-class-name: org.postgresql.Driver
@@ -39,7 +40,7 @@ spring:
     validate-migration-naming: true
     ignore-unsupported-database: true
     locations: "classpath:db/migration"
-    schemas:
+    schemas: ${DB_SCHEMA}
 
   # JPA Configuration
   jpa:
@@ -57,8 +58,8 @@ spring:
     multipart:
       enabled: true
       location: /tmp
-      max-file-size: 500KB
-      max-request-size: 500KB
+      max-file-size: ${AVATAR_MAX_SIZE}
+      max-request-size: ${AVATAR_MAX_SIZE}
       resolve-lazily: false
 
 application:
@@ -78,8 +79,6 @@ management:
 logging:
   level:
     org.springdoc: DEBUG
-#    com.zaxxer.hikari: DEBUG
-#    org.hibernate.SQL: DEBUG
 
   doc: # Swagger-specific settings
     api-docs:

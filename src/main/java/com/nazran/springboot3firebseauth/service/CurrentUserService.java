@@ -11,12 +11,11 @@ public interface CurrentUserService {
     /**
      * Sets the avatar for the specified user.
      *
-     * @param avatarType     the type of avatar being set (e.g., predefined or custom).
      * @param file           the file containing the avatar image.
      * @param firebaseUserId the unique identifier of the user in Firebase.
      * @throws IOException if an error occurs while processing the avatar file.
      */
-    void setAvatar(Integer avatarType, MultipartFile file, String firebaseUserId) throws IOException;
+    void setAvatar(MultipartFile file, String firebaseUserId) throws IOException;
 
     /**
      * Fetch details of the currently authenticated user.

@@ -6,7 +6,6 @@ CREATE TABLE IF NOT EXISTS Users (
     first_name VARCHAR(100) NOT NULL,
     last_name VARCHAR(100) NOT NULL,
     email VARCHAR(256) NOT NULL UNIQUE,
-    normalized_email VARCHAR(256) NOT NULL UNIQUE,
     is_email_verified BOOLEAN DEFAULT FALSE,
     status int NOT NULL,
     firebase_user_id VARCHAR(100) NOT NULL

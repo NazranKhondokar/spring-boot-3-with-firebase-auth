@@ -20,10 +20,7 @@ public class CheckEmailServiceImpl implements CheckEmailService {
     private final UserRepository userRepository;
 
     /**
-     * Check if Email is Already Registered.
-     *
-     * @param email Email of the user.
-     * @return exists true or false
+     * {@inheritDoc}
      */
     @Override
     public boolean emailExists(String email) {

@@ -19,5 +19,4 @@ public class CurrentUserResponse {
     private String firebaseUserId;
     private String joinDate;
     private String avatar;
-    private int avatarType;
 }
