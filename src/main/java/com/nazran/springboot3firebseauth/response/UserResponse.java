@@ -26,7 +26,6 @@ public class UserResponse {
         response.setFirstName(user.getFirstName());
         response.setLastName(user.getLastName());
         response.setEmail(user.getEmail());
-        response.setNormalizedEmail(user.getNormalizedEmail());
         response.setIsEmailVerified(user.getIsEmailVerified());
         response.setStatus(String.valueOf(user.getUserStatus()));
         response.setFirebaseUserId(user.getFirebaseUserId());
