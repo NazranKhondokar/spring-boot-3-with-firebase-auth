@@ -16,6 +16,7 @@ public class UserResponse {
     private Boolean isEmailVerified;
     private String status;
     private String firebaseUserId;
+
     public static UserResponse from(User user) {
         if (user == null) {
             return null; // or return a default UserResponse object

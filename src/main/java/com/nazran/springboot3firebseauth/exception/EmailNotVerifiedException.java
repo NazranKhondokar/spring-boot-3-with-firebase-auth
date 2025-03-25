@@ -9,7 +9,7 @@ import java.io.Serial;
 public class EmailNotVerifiedException extends RuntimeException {
 
     @Serial
-    private static final long serialVersionUID = 14L;
+    private static final long serialVersionUID = 1L;
 
     public EmailNotVerifiedException(String s) {
         super(s);

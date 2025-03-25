@@ -1,7 +1,7 @@
 package com.nazran.springboot3firebseauth.exception;
 
-import com.nazran.springboot3firebseauth.utils.ResponseBuilder;
 import com.fasterxml.jackson.core.JsonParseException;
+import com.nazran.springboot3firebseauth.utils.ResponseBuilder;
 import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
@@ -16,11 +16,10 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.method.annotation.HandlerMethodValidationException;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import static com.nazran.springboot3firebseauth.constant.ValidatorConstants.RESOURCE_NOT_FOUND;
 
 @Slf4j
 @Order(Ordered.HIGHEST_PRECEDENCE)
@@ -32,7 +31,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<JSONObject> handleNotFoundExceptions(Exception ex, WebRequest request) {
         logger.error("ResourceNotFoundException: {}", ex.getMessage(), ex);
-        return new ResponseEntity<>(ResponseBuilder.error((ex.getMessage() + " " + RESOURCE_NOT_FOUND)).getJson(), HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(ResponseBuilder.error(null, (ex.getMessage())).getJson(), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(CustomMessagePresentException.class)
@@ -73,6 +72,12 @@ public class GlobalExceptionHandler {
         logger.error("MethodArgumentNotValidException: {}", firstErrorMessage, ex);
         return new ResponseEntity<>(ResponseBuilder.error(null, firstErrorMessage).getJson(), HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(HandlerMethodValidationException.class)
+    public ResponseEntity<JSONObject> handleValidationException(HandlerMethodValidationException ex) {
+        return new ResponseEntity<>(ResponseBuilder.error(null, "Invalid email format").getJson(), HttpStatus.BAD_REQUEST);
+    }
+
 
     @ExceptionHandler(EmailNotVerifiedException.class)
     public ResponseEntity<JSONObject> handleEmailNotVerifiedException(EmailNotVerifiedException exc) {

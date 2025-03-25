@@ -11,9 +11,9 @@ import java.util.Map;
 public class ResponseBuilder implements Response {
 
     private final ResponseType type;
+    private final Object markList = null;
     private String status = null;
     private Object data = null;
-    private final Object markList = null;
     private Object meta = null;
     private String message = null;
     private Object errors = null;
@@ -44,21 +44,6 @@ public class ResponseBuilder implements Response {
         ResponseBuilder response = new ResponseBuilder(ResponseType.DATA);
         response.data = data;
         response.status = ResponseStatus.SUCCESS;
-        return response;
-    }
-
-    public static ResponseBuilder successWithMeta(Object data, int count) {
-        ResponseBuilder response = new ResponseBuilder(ResponseType.DATA);
-        response.data = data;
-        response.meta = count;
-        response.status = ResponseStatus.SUCCESS;
-        return response;
-    }
-
-    public static ResponseBuilder successWithoutStatus(Object data, String message) {
-        ResponseBuilder response = new ResponseBuilder(ResponseType.DATA);
-        response.data = data;
-        response.message = message;
         return response;
     }
 
@@ -104,45 +89,4 @@ public class ResponseBuilder implements Response {
 
         return new JSONObject(maps);
     }
-
-    @Override
-    public JSONObject customGetJson() {
-
-        Map<String, Object> maps = new HashMap<String, Object>();
-
-        switch (this.type) {
-            case DATA:
-                maps.put("status", status);
-                maps.put("markList", markList);
-                maps.put("meta", meta);
-                maps.put("message", message);
-            case ERROR:
-                maps.put("status", status);
-                maps.put("message", message);
-                maps.put("errors", errors);
-        }
-
-        return new JSONObject(maps);
-    }
-
-    @Override
-    public JSONObject customGetJsonForAll() {
-
-        Map<String, Object> maps = new HashMap<String, Object>();
-
-        switch (this.type) {
-            case DATA:
-                maps.put("status", status);
-                maps.put("markList", data);
-                maps.put("meta", meta);
-                maps.put("message", message);
-            case ERROR:
-                maps.put("status", status);
-                maps.put("message", message);
-                maps.put("errors", errors);
-        }
-
-        return new JSONObject(maps);
-    }
-
 }

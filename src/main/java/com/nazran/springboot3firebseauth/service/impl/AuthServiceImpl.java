@@ -1,5 +1,8 @@
 package com.nazran.springboot3firebseauth.service.impl;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthException;
+import com.google.firebase.auth.FirebaseToken;
 import com.nazran.springboot3firebseauth.dto.UserRegistrationRequest;
 import com.nazran.springboot3firebseauth.entity.User;
 import com.nazran.springboot3firebseauth.enums.UserStatus;
@@ -9,9 +12,6 @@ import com.nazran.springboot3firebseauth.repository.UserRepository;
 import com.nazran.springboot3firebseauth.response.LoginResponse;
 import com.nazran.springboot3firebseauth.response.UserRegistrationResponse;
 import com.nazran.springboot3firebseauth.service.AuthService;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseAuthException;
-import com.google.firebase.auth.FirebaseToken;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

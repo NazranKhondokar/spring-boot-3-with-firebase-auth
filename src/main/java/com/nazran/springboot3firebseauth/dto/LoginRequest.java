@@ -11,3 +11,4 @@ public class LoginRequest {
     @NotBlank(message = "Token is required.")
     private String idToken;
 }
+

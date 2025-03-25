@@ -10,9 +10,6 @@ import java.util.Map;
 
 /**
  * A common class to manage filter data
- *
- * @author Alhaj Uddin
- * @since 1.0
  */
 public class ServiceHelper<T> {
 
@@ -42,7 +39,7 @@ public class ServiceHelper<T> {
         } else {
             String[] parts = sortBy.split(",");
             pageable = PageRequest.of(page - 1, size, Sort.by(parts[0]));
-            if (parts[1].equals("desc")) pageable = PageRequest.of(page - 1, size, Sort.by(parts[0]).descending());
+            if (parts[1].equalsIgnoreCase("desc")) pageable = PageRequest.of(page - 1, size, Sort.by(parts[0]).descending());
         }
         return pageable;
     }
@@ -58,7 +55,7 @@ public class ServiceHelper<T> {
     public Map<String, Object> getList(Page<T> result, Integer page, Integer size) {
         Long total = result.getTotalElements();
         Map<String, Object> maps = new HashMap<>();
-        PaginationParameters.getdata(maps, page, total, size, result.getContent());
+        PaginationParameters.getData(maps, page, total, size, result.getContent());
         return maps;
     }
 }

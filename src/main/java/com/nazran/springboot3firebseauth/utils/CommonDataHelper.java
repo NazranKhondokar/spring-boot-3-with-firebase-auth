@@ -19,7 +19,7 @@ public class CommonDataHelper {
         meta.put("currentPage", currentPage);
         meta.put("nextPage", nextPage);
         meta.put("previousPage", previousPage);
-        meta.put("size", searchResult.get("size"));
+        meta.put("totalPages", searchResult.get("totalPages"));
         meta.put("total", searchResult.get("total"));
 
         response.setList(list);

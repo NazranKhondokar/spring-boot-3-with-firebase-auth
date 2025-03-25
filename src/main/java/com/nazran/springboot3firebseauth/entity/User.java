@@ -1,9 +1,7 @@
 package com.nazran.springboot3firebseauth.entity;
 
-
-import com.nazran.springboot3firebseauth.enums.ApplicationTheme;
-import com.nazran.springboot3firebseauth.enums.AvatarType;
 import com.nazran.springboot3firebseauth.enums.UserStatus;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
@@ -11,17 +9,20 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
-import jakarta.persistence.*;
+
+import java.io.Serial;
+
 @Getter
 @Setter
 @Entity
 @DynamicInsert
 @DynamicUpdate
 @NoArgsConstructor
-@Table(name = "users")
-public class User extends BaseEntityWithUpdate{
+@Table(schema = "bitcoin", name = "users")
+public class User extends BaseEntityWithUpdate {
 
-    private static final Long serialVersionUID = 1L;
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     @Column(name = "first_name", length = 100, nullable = false)
     private String firstName;
@@ -48,15 +49,4 @@ public class User extends BaseEntityWithUpdate{
     @Enumerated(EnumType.ORDINAL)
     @Column(name = "status", length = 20)
     private UserStatus userStatus;
-
-    @Column(name = "avatar", columnDefinition = "BYTEA")
-    private byte[] avatar; // To store icon in binary format
-
-    @Enumerated(EnumType.ORDINAL)
-    @Column(name = "avatar_type", length = 20)
-    private AvatarType avatarType;
-
-    @Enumerated(EnumType.ORDINAL)
-    @Column(name = "application_theme", length = 20)
-    private ApplicationTheme applicationTheme;
 }

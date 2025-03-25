@@ -1,10 +1,10 @@
 package com.nazran.springboot3firebseauth.security;
 
-import com.nazran.springboot3firebseauth.constant.ResponseStatus;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseToken;
+import com.nazran.springboot3firebseauth.constant.ResponseStatus;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -21,11 +21,25 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Custom authentication filter for Firebase JWT token verification.
+ * This filter intercepts incoming requests and validates Firebase ID tokens
+ * in the Authorization header.
+ */
 @Component
 public class FirebaseAuthenticationFilter extends OncePerRequestFilter {
 
     private static final Logger logger = LoggerFactory.getLogger(FirebaseAuthenticationFilter.class);
 
+    /**
+     * Processes each HTTP request to verify Firebase authentication token.
+     *
+     * @param request     the HTTP request
+     * @param response    the HTTP response
+     * @param filterChain the filter chain to continue processing
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException      if an I/O error occurs during request processing
+     */
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,

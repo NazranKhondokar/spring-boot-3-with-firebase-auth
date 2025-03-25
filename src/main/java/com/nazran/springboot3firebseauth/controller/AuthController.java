@@ -1,12 +1,15 @@
 package com.nazran.springboot3firebseauth.controller;
 
+import com.nazran.springboot3firebseauth.annotation.ValidEmail;
 import com.nazran.springboot3firebseauth.dto.LoginRequest;
 import com.nazran.springboot3firebseauth.dto.UserRegistrationRequest;
 import com.nazran.springboot3firebseauth.entity.User;
 import com.nazran.springboot3firebseauth.exception.CustomMessagePresentException;
+import com.nazran.springboot3firebseauth.response.CheckEmailResponse;
 import com.nazran.springboot3firebseauth.response.LoginResponse;
 import com.nazran.springboot3firebseauth.response.UserRegistrationResponse;
 import com.nazran.springboot3firebseauth.service.AuthService;
+import com.nazran.springboot3firebseauth.service.CheckEmailService;
 import com.nazran.springboot3firebseauth.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -15,7 +18,7 @@ import lombok.RequiredArgsConstructor;
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
+import org.springframework.dao.DataAccessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,6 +41,7 @@ public class AuthController {
     private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
 
     private final AuthService authService;
+    private final CheckEmailService checkEmailService;
     private final UserService userService;
 
     @Operation(summary = "Register a new user", description = "Registers a user and sends an email verification link.")
@@ -60,10 +64,6 @@ public class AuthController {
         } catch (CustomMessagePresentException ex) {
             logger.error("Error while resending verification email for {}: {}", email, ex.getMessage(), ex);
             return ResponseEntity.badRequest().body(error(null, ex.getMessage()).getJson());
-        } catch (Exception ex) {
-            logger.error("Unexpected error while resending verification email for {}: {}", email, ex.getMessage(), ex);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(error(null, "Unexpected error occurred").getJson());
         }
     }
 
@@ -77,6 +77,23 @@ public class AuthController {
         } catch (CustomMessagePresentException ex) {
             logger.error("Error during social login: {}", ex.getMessage(), ex);
             return ResponseEntity.badRequest().body(error(null, ex.getMessage()).getJson());
+        }
+    }
+
+    @Operation(summary = "Check if Email is Already Registered", description = "Verifies whether the given email exists in the system.")
+    @GetMapping("/check-email")
+    public ResponseEntity<JSONObject> checkEmail(@RequestParam @Valid @ValidEmail String email) {
+        try {
+            boolean exists = checkEmailService.emailExists(email);
+            CheckEmailResponse response = new CheckEmailResponse();
+            response.setExists(exists);
+            return ok(success(response, "Email existence check successful.").getJson());
+        } catch (IllegalArgumentException e) {
+            logger.error("Invalid email provided: {}", email, e);
+            return ResponseEntity.badRequest().body(error("Invalid email format.").getJson());
+        } catch (DataAccessException e) {
+            logger.error("Database error while checking email: {}", email, e);
+            return ResponseEntity.internalServerError().body(error("Database error. Please try again later.").getJson());
         }
     }
 }
