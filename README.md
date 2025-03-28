@@ -90,6 +90,22 @@ Verify installation:
 docker --version
 docker-compose --version
 ```
+### **Step 2: Enable and Start Docker** in Ubuntu
+ Ensure Docker starts on system boot:
+ ```bash
+ sudo systemctl enable docker
+ sudo systemctl start docker
+```
+
+### **Step 3: Try Running the Docker Daemon Manually** in WSL
+Since `service docker start` does not work, try starting `dockerd` manually:
+```sh
+sudo dockerd &
+```
+Then check if Docker is running:
+```sh
+docker ps
+```
 
 # PostgreSQL installation
 
