@@ -78,52 +78,17 @@ git remote set-url origin https://<username>:<token>@github.com/bduswork/bitcoin
 
 # Docker Installation
 
-### **Step 1: Install Required Dependencies**
-Docker requires some dependencies to be installed:
-```bash
-sudo apt install -y apt-transport-https ca-certificates curl software-properties-common
+## **Step 1: Install Docker & Docker Compose**
+Ensure **Docker** and **Docker Compose** are installed. If not, install them using:
+
+```sh
+sudo apt update && sudo apt install -y docker.io docker-compose
 ```
 
-### **Step 2: Add Docker's Official GPG Key**
-Add Docker’s official GPG key for package verification:
-```bash
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
-```
-
-### **Step 3: Add Docker’s APT Repository**
-Add the Docker repository to your system:
-```bash
-echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-```
-
-### **Step 4: Update the Package List**
-Refresh the package list to include Docker's repository:
-```bash
-sudo apt update
-```
-
-### **Step 5: Install Docker Engine**
-Now, install Docker:
-```bash
-sudo apt install -y docker-ce docker-ce-cli containerd.io
-```
-
-### **Step 6: Verify Docker Installation**
-Check if Docker is installed correctly:
-```bash
+Verify installation:
+```sh
 docker --version
-```
-
-You can also test it by running the `hello-world` container:
-```bash
-sudo docker run hello-world
-```
-
-### **Step 7: Enable and Start Docker**
-Ensure Docker starts on system boot:
-```bash
-sudo systemctl enable docker
-sudo systemctl start docker
+docker-compose --version
 ```
 
 # PostgreSQL installation
