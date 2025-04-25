@@ -66,7 +66,7 @@ git version 2.x.x
 
 ### 2️⃣ **Clone the Repository**
 ```bash
-git clone https://github.com/bduswork/bitcoinapps_backend.git
+git clone https://github.com/<organizationname>/<reponame>.git
 ```
 
 ### 3️⃣ **Configure Git**
@@ -77,7 +77,7 @@ git config --global user.name "YourUsername"
 
 ### 4️⃣ **Set Remote with GitHub Token**
 ```bash
-git remote set-url origin https://<username>:<token>@github.com/bduswork/bitcoinapps_backend.git
+git remote set-url origin https://<username>:<token>@github.com/<organizationname>/<reponame>.git
 ```
 
 ---
